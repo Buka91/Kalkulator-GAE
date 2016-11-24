@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script type="text/javascript">
+
+        function validate(e) {
+            var invalidcharacters = /[^0-9]/gi;
+            var phn = document.getElementById("0");
+            if (invalidcharacters.test(phn.value)) {
+                newstring = phn.value.replace(invalidcharacters, "");
+                phn.value = newstring;
+            }
+        }
+        var state = true;
+
+        function reply_click(clicked_id) {
+            if (state) {
+                switch(clicked_id) {
+                    case "1":
+                        try {
+                            var res = parseFloat(eval(document.getElementById("0").value)) * 100;
+                            res = "= " + res + " %";
+                            document.getElementById("0").value = "(" + document.getElementById("0").value + ")" + ("\n" + res);
+                        }
+                        catch(err) {
+                            document.getElementById("0").value = err.message;
+                        }
+                        state = false;
+                        break;
+                    case "2":
+                        try {
+                            var res = Math.sqrt(parseFloat(eval(document.getElementById("0").value)));
+                            res = "= " + res;
+                            document.getElementById("0").value = "sqrt(" + document.getElementById("0").value + ")" + ("\n" + res);
+                        }
+                        catch(err) {
+                            document.getElementById("0").value = err.message;
+                        }
+                        state = false;
+                        break;
+                    case "3":
+                        try {
+                            var res = Math.pow(parseFloat(eval(document.getElementById("0").value)), 2);
+                            res = "= " + res;
+                            document.getElementById("0").value = "(" + document.getElementById("0").value + ")^2" + ("\n" + res);
+                        }
+                        catch(err) {
+                            document.getElementById("0").value = err.message;
+                        }
+                        state = false;
+                        break;
+                    case "4":
+                        try {
+                            var res = 1 / parseFloat(eval(document.getElementById("0").value));
+                            res = "= " + res;
+                            document.getElementById("0").value = "1 / (" + document.getElementById("0").value + ")" + ("\n" + res);
+                        }
+                        catch(err) {
+                            document.getElementById("0").value = err.message;
+                        }
+                        state = false;
+                        break;
+                    case "5":
+                        document.getElementById("0").value = "0";
+                        break;
+                    case "6":
+                        var len = document.getElementById("0").value.length;
+                        document.getElementById("0").value = document.getElementById("0").value.substring(0, len - 1);
+                        break;
+                    case "7":
+                        if (document.getElementById("0").value.charAt(0) == "-") {
+                            var len = document.getElementById("0").value.length;
+                            document.getElementById("0").value = document.getElementById("0").value.substring(1, len);
+                        } else {
+                            document.getElementById("0").value = "-" + document.getElementById("0").value;
+                        }
+                        break;
+                    case "8":
+                        document.getElementById("0").value += (" / ");
+                        break;
+                    case "12":
+                        document.getElementById("0").value += (" * ");
+                        break;
+                    case "16":
+                        document.getElementById("0").value += (" - ");
+                        break;
+                    case "20":
+                        document.getElementById("0").value += (" + ");
+                        break;
+                    case "22":
+                        if (document.getElementById("0").value != "0") {
+                            document.getElementById("0").value += document.getElementById(clicked_id).innerHTML;
+                        }
+                        break;
+                    case "23":
+                        if (!(document.getElementById("0").value.includes("."))) {
+                            document.getElementById("0").value += ".";
+                        }
+                        break;
+                    case "24":
+                        try {
+                            var res = eval(document.getElementById("0").value);
+                            res = "= " + res;
+                            document.getElementById("0").value += ("\n" + res);
+                        }
+                        catch(err) {
+                            document.getElementById("0").value = err.message;
+                        }
+                        state = false;
+                        break;
+                    default:
+                        if (document.getElementById("0").value != "0") {
+                            document.getElementById("0").value += document.getElementById(clicked_id).innerHTML;
+                        } else {
+                            document.getElementById("0").value = document.getElementById(clicked_id).innerHTML;
+                        }
+                        break;
+                }
+            } else {
+                if (clicked_id == "5") {
+                    document.getElementById("0").value = "0";
+                    state = true;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <form method="post" action="/">
+        <textarea rows="4" cols="25" name="get_nmb" id="0" onKeyUp="validate(event)">0</textarea><br>
+        <div class="calc">
+            <div class="row">
+                <a href="#" id="1" onClick="reply_click(this.id)">%</a>
+                <a href="#" id="2" onClick="reply_click(this.id)">&radic;</a>
+                <a href="#" id="3" onClick="reply_click(this.id)">x&sup2;</a>
+                <a href="#" id="4" onClick="reply_click(this.id)">&#8543;x</a>
+            </div>
+            <div class="row">
+                <a href="#" id="5" onClick="reply_click(this.id)">C</a>
+                <a href="#" id="6" onClick="reply_click(this.id)">&larr;</a>
+                <a href="#" id="7" onClick="reply_click(this.id)">&plusmn;</a>
+                <a href="#" id="8" onClick="reply_click(this.id)">&divide;</a>
+            </div>
+            <div class="row">
+                <a href="#" id="9" onClick="reply_click(this.id)">7</a>
+                <a href="#" id="10" onClick="reply_click(this.id)">8</a>
+                <a href="#" id="11" onClick="reply_click(this.id)">9</a>
+                <a href="#" id="12" onClick="reply_click(this.id)">&times;</a>
+            </div>
+            <div class="row">
+                <a href="#" id="13" onClick="reply_click(this.id)">4</a>
+                <a href="#" id="14" onClick="reply_click(this.id)">5</a>
+                <a href="#" id="15" onClick="reply_click(this.id)">6</a>
+                <a href="#" id="16" onClick="reply_click(this.id)">-</a>
+            </div>
+            <div class="row">
+                <a href="#" id="17" onClick="reply_click(this.id)">1</a>
+                <a href="#" id="18" onClick="reply_click(this.id)">2</a>
+                <a href="#" id="19" onClick="reply_click(this.id)">3</a>
+                <a href="#" id="20" onClick="reply_click(this.id)">+</a>
+            </div>
+            <div class="row">
+                <a href="#" id="21" onClick="reply_click(this.id)">0</a>
+                <a href="#" id="22" onClick="reply_click(this.id)">00</a>
+                <a href="#" id="23" onClick="reply_click(this.id)">,</a>
+                <a href="#" id="24" onClick="reply_click(this.id)">=</a>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
